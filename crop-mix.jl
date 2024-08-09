@@ -100,9 +100,9 @@ function FBF(x, λ, α)
     N   = size(x, 1)
     x⁺  = stack(i -> proj(x[i,:] - α*(g[i,:] + C[i,:,:]'*λ), A[i,:,:], b[i,:,:]), 1:N, dims=1)
     λ⁺  = max.(0, λ + α*sum(i -> C[i,:,:]*x[i,:], 1:N))
-    # x⁺⁺ = x⁺ - stack(i -> α*(g[i,:] + C[i,:,:]'*(λ⁺ - λ)), 1:N, dims=1)
-    # λ⁺⁺ = λ⁺ - α*sum(i -> C[i,:,:]*(x⁺[i,:] - x[i,:]), 1:N)
-    return x⁺, λ⁺
+    x⁺⁺ = x⁺ - stack(i -> α*(g[i,:] + C[i,:,:]'*(λ⁺ - λ)), 1:N, dims=1)
+    λ⁺⁺ = λ⁺ - α*sum(i -> C[i,:,:]*(x⁺[i,:] - x[i,:]), 1:N)
+    return x⁺⁺, λ⁺⁺
 end
 
 N = 50 # Num of agents
